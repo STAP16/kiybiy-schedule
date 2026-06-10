@@ -19,6 +19,6 @@
   { "title": "Телефоны, сладкий шкаф", "time": "19:30", "icon": "Smartphone", "color": "#2563eb" },
   { "title": "Сдача телефонов и сладкого шкафа", "time": "19:50", "icon": "Archive", "color": "#475569" },
   { "title": "Лагерное мероприятие", "time": "20:00", "icon": "Flag", "color": "#2563eb" },
-  { "title": "Готовимся ко сну", "time": "21:00", "icon": "MoonStar", "color": "#6366f1" },
-  { "title": "Отбой", "time": "22:00", "icon": "LampDesk", "color": "#1d4ed8" }
+  { "title": "Готовимся ко сну", "time": "22:00", "icon": "MoonStar", "color": "#6366f1" },
+  { "title": "Отбой", "time": "22:30", "icon": "LampDesk", "color": "#1d4ed8" }
 ]

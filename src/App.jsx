@@ -1,9 +1,13 @@
-import { SunMedium } from 'lucide-react';
-import scheduleData from './data/schedule.json';
+import { MoonStar, SunMedium } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import backgroundSummerUrl from '../assets/background_summer.webp';
+import summerNightUrl from '../assets/summer_night.webp';
 import InfoCard from './components/InfoCard';
 import TimelineItem from './components/TimelineItem';
+import scheduleData from './data/schedule.json';
 import {
   formatClock,
+  formatDuration,
   formatEventTime,
   formatLongDate,
   getMinutesUntil,
@@ -12,9 +16,29 @@ import {
   normalizeSchedule,
 } from './utils/schedule';
 
-import { useEffect, useMemo, useState } from 'react';
-
 const schedule = normalizeSchedule(scheduleData);
+const NIGHT_ACCENT_COLOR = '#f3cd76';
+
+function getCardEvent(event, isLightsOut) {
+  if (!event || !isLightsOut) {
+    return event;
+  }
+
+  if (event.icon === 'LampDesk' || event.icon === 'AlarmClock') {
+    return {
+      ...event,
+      color: NIGHT_ACCENT_COLOR,
+    };
+  }
+
+  return event;
+}
+
+function preloadImage(src) {
+  const image = new Image();
+  image.src = src;
+  return image;
+}
 
 export default function App() {
   const [now, setNow] = useState(() => new Date());
@@ -31,10 +55,30 @@ export default function App() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const { currentMinutes, currentEvent, nextEvent, upcomingEvents } = useMemo(
-    () => getScheduleState(schedule, now),
-    [now],
-  );
+  useEffect(() => {
+    const preloadedImages = [
+      preloadImage(backgroundSummerUrl),
+      preloadImage(summerNightUrl),
+    ];
+
+    return () => {
+      preloadedImages.forEach((image) => {
+        image.src = '';
+      });
+    };
+  }, []);
+
+  const {
+    currentMinutes,
+    currentEvent,
+    nextEvent,
+    upcomingEvents,
+    isOvernightLightsOut,
+    startOfNewDayMinutes,
+  } = useMemo(() => getScheduleState(schedule, now), [now]);
+  const isLightsOut = currentEvent?.icon === 'LampDesk';
+  const currentCardEvent = getCardEvent(currentEvent, isLightsOut);
+  const nextCardEvent = getCardEvent(nextEvent, isLightsOut);
 
   const timelineItems = useMemo(
     () =>
@@ -45,8 +89,41 @@ export default function App() {
     [upcomingEvents],
   );
 
+  useEffect(() => {
+    document.body.classList.toggle('night-mode', isLightsOut);
+
+    return () => {
+      document.body.classList.remove('night-mode');
+    };
+  }, [isLightsOut]);
+
+  const currentCardHelperText = isLightsOut
+    ? isOvernightLightsOut
+      ? 'До подъема'
+      : 'До начала нового дня'
+    : 'До конца';
+
+  const currentCardAccentText = currentEvent
+    ? isLightsOut
+      ? formatDuration(
+          getMinutesUntil(
+            isOvernightLightsOut
+              ? nextEvent?.startMinutes ?? startOfNewDayMinutes
+              : startOfNewDayMinutes,
+            currentMinutes,
+          ),
+        )
+      : formatDuration(getMinutesUntil(currentEvent.endMinutes, currentMinutes))
+    : '-';
+
+  const currentCardProgress = currentEvent
+    ? isLightsOut && isOvernightLightsOut
+      ? 100
+      : getProgressPercent(currentEvent, currentMinutes)
+    : undefined;
+
   return (
-    <main className="page-shell">
+    <main className={`page-shell ${isLightsOut ? 'page-shell-night' : ''}`}>
       <div className="background-glow background-glow-left" />
       <div className="background-glow background-glow-right" />
 
@@ -59,7 +136,11 @@ export default function App() {
           </div>
           <div className="hero-date-row">
             <p className="hero-date">{formatLongDate(now)}</p>
-            <SunMedium size={28} color="#f5b700" />
+            {isLightsOut ? (
+              <MoonStar size={28} color={NIGHT_ACCENT_COLOR} />
+            ) : (
+              <SunMedium size={28} color="#f5b700" />
+            )}
           </div>
         </div>
       </section>
@@ -67,42 +148,40 @@ export default function App() {
       <section className="cards-grid">
         <InfoCard
           label="Сейчас"
-          event={currentEvent}
-          helperText="До конца"
-          accentText={
-            currentEvent
-              ? `${getMinutesUntil(currentEvent.endMinutes, currentMinutes)} мин`
-              : '-'
-          }
-          progress={
-            currentEvent ? getProgressPercent(currentEvent, currentMinutes) : undefined
-          }
+          event={currentCardEvent}
+          helperText={currentCardHelperText}
+          accentText={currentCardAccentText}
+          progress={currentCardProgress}
           filledIcon
         />
         <InfoCard
           label="Далее"
-          event={nextEvent}
+          event={nextCardEvent}
           helperText="Начнется"
           accentText={
-            nextEvent ? `через ${getMinutesUntil(nextEvent.startMinutes, currentMinutes)} мин` : '-'
+            nextEvent
+              ? `через ${formatDuration(getMinutesUntil(nextEvent.startMinutes, currentMinutes))}`
+              : '-'
           }
         />
       </section>
 
-      <section className="timeline-section">
-        <div className="section-header">
-          <p className="section-label">Ближайшие события</p>
-        </div>
-        <ul className="timeline-list">
-          {timelineItems.map((event, index) => (
-            <TimelineItem
-              key={event.id}
-              event={event}
-              active={index === 0}
-            />
-          ))}
-        </ul>
-      </section>
+      {!isLightsOut ? (
+        <section className="timeline-section">
+          <div className="section-header">
+            <p className="section-label">Ближайшие события</p>
+          </div>
+          <ul className="timeline-list">
+            {timelineItems.map((event, index) => (
+              <TimelineItem
+                key={event.id}
+                event={event}
+                active={index === 0}
+              />
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </main>
   );
 }

@@ -87,14 +87,30 @@ export function normalizeSchedule(rawSchedule) {
 export function getScheduleState(schedule, now = new Date()) {
   const parts = getMoscowNowParts(now);
   const currentMinutes = parts.hour * 60 + parts.minute;
+  const firstEvent = schedule[0] ?? null;
+  const lastEvent = schedule[schedule.length - 1] ?? null;
 
-  const currentEvent =
+  let currentEvent =
     schedule.find(
       (item) => currentMinutes >= item.startMinutes && currentMinutes < item.endMinutes,
     ) ?? null;
 
+  const isOvernightLightsOut =
+    !currentEvent &&
+    firstEvent &&
+    lastEvent &&
+    currentMinutes < firstEvent.startMinutes &&
+    lastEvent.icon === 'LampDesk';
+
+  if (isOvernightLightsOut) {
+    currentEvent = {
+      ...lastEvent,
+      carriesIntoNextDay: true,
+    };
+  }
+
   const nextEvent =
-    schedule.find((item) => item.startMinutes > currentMinutes) ?? schedule[0] ?? null;
+    schedule.find((item) => item.startMinutes > currentMinutes) ?? firstEvent ?? null;
 
   const upcomingEvents = schedule
     .filter((item) => item.endMinutes > currentMinutes)
@@ -105,6 +121,8 @@ export function getScheduleState(schedule, now = new Date()) {
     currentEvent,
     nextEvent,
     upcomingEvents,
+    isOvernightLightsOut,
+    startOfNewDayMinutes: 24 * 60,
   };
 }
 
@@ -119,6 +137,37 @@ export function formatEventTime(event) {
 export function getMinutesUntil(targetMinutes, currentMinutes) {
   const diff = targetMinutes - currentMinutes;
   return diff >= 0 ? diff : 24 * 60 + diff;
+}
+
+function pluralize(value, forms) {
+  const mod10 = value % 10;
+  const mod100 = value % 100;
+
+  if (mod10 === 1 && mod100 !== 11) {
+    return forms[0];
+  }
+
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+    return forms[1];
+  }
+
+  return forms[2];
+}
+
+export function formatDuration(minutes) {
+  if (minutes < 60) {
+    return `${minutes} ${pluralize(minutes, ['минута', 'минуты', 'минут'])}`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const restMinutes = minutes % 60;
+  const parts = [`${hours} ${pluralize(hours, ['час', 'часа', 'часов'])}`];
+
+  if (restMinutes > 0) {
+    parts.push(`${restMinutes} ${pluralize(restMinutes, ['минута', 'минуты', 'минут'])}`);
+  }
+
+  return parts.join(' ');
 }
 
 export function getProgressPercent(event, currentMinutes) {

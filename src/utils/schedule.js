@@ -84,7 +84,8 @@ export function normalizeSchedule(rawSchedule) {
   });
 }
 
-export function getScheduleState(schedule, now = new Date()) {
+export function getScheduleState(schedule, now = new Date(), options = {}) {
+  const { upcomingLimit = 7 } = options;
   const parts = getMoscowNowParts(now);
   const currentMinutes = parts.hour * 60 + parts.minute;
   const firstEvent = schedule[0] ?? null;
@@ -112,9 +113,11 @@ export function getScheduleState(schedule, now = new Date()) {
   const nextEvent =
     schedule.find((item) => item.startMinutes > currentMinutes) ?? firstEvent ?? null;
 
-  const upcomingEvents = schedule
-    .filter((item) => item.endMinutes > currentMinutes)
-    .slice(0, 7);
+  const filteredUpcomingEvents = schedule.filter((item) => item.endMinutes > currentMinutes);
+  const upcomingEvents =
+    typeof upcomingLimit === 'number'
+      ? filteredUpcomingEvents.slice(0, upcomingLimit)
+      : filteredUpcomingEvents;
 
   return {
     currentMinutes,

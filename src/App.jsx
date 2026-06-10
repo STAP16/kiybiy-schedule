@@ -21,6 +21,7 @@ const schedule = normalizeSchedule(scheduleData);
 const NIGHT_ACCENT_COLOR = '#f3cd76';
 const EVENING_ACCENT_COLOR = '#f6b457';
 const EVENING_START_MINUTES = 17 * 60;
+const MOBILE_BREAKPOINT = 640;
 
 function getCardEvent(event, theme) {
   if (!event) {
@@ -52,6 +53,7 @@ function preloadImage(src) {
 
 export default function App() {
   const [now, setNow] = useState(() => new Date());
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= MOBILE_BREAKPOINT);
   const clockText = formatClock(now);
   const clockParts = clockText.split(':');
   const clockMain = clockParts.slice(0, 2).join(':');
@@ -63,6 +65,20 @@ export default function App() {
     }, 1000);
 
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const updateIsMobile = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', updateIsMobile);
+
+    return () => {
+      mediaQuery.removeEventListener('change', updateIsMobile);
+    };
   }, []);
 
   useEffect(() => {
@@ -86,7 +102,13 @@ export default function App() {
     upcomingEvents,
     isOvernightLightsOut,
     startOfNewDayMinutes,
-  } = useMemo(() => getScheduleState(schedule, now), [now]);
+  } = useMemo(
+    () =>
+      getScheduleState(schedule, now, {
+        upcomingLimit: isMobile ? null : 7,
+      }),
+    [isMobile, now],
+  );
 
   const isLightsOut = currentEvent?.icon === 'LampDesk';
   const isEvening = !isLightsOut && currentMinutes >= EVENING_START_MINUTES;
@@ -155,7 +177,10 @@ export default function App() {
             {theme === 'night' ? (
               <MoonStar size={28} color={NIGHT_ACCENT_COLOR} />
             ) : (
-              <SunMedium size={28} color={theme === 'evening' ? EVENING_ACCENT_COLOR : '#f5b700'} />
+              <SunMedium
+                size={28}
+                color={theme === 'evening' ? EVENING_ACCENT_COLOR : '#f5b700'}
+              />
             )}
           </div>
         </div>

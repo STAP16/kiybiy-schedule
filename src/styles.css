@@ -494,61 +494,128 @@ body.evening-mode {
 }
 
 @media (max-width: 640px) {
+  body,
+  body.night-mode,
+  body.evening-mode {
+    background-attachment: scroll;
+    background-position: center top;
+  }
+
   .page-shell {
-    padding: 24px 14px 28px;
+    padding: 18px 12px 24px;
   }
 
   .hero {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
+  }
+
+  .hero-time {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-label {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  .clock {
+    margin: 10px 0 14px;
+    justify-content: center;
+    gap: 2px;
+    font-size: clamp(36px, 16vw, 58px);
+  }
+
+  .hero-date-row {
+    gap: 8px;
   }
 
   .hero-date {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .info-card {
-    align-items: flex-start;
+    align-items: center;
     min-height: 0;
-    padding: 18px;
-    border-radius: 22px;
+    gap: 12px;
+    padding: 16px 14px;
+    border-radius: 20px;
+  }
+
+  .info-card .icon-badge {
+    width: 48px !important;
+    height: 48px !important;
   }
 
   .info-card h2 {
-    font-size: 24px;
+    font-size: 20px;
+    margin-top: 2px;
+  }
+
+  .section-label {
+    font-size: 12px;
+  }
+
+  .event-description {
+    font-size: 13px;
   }
 
   .info-card-meta,
   .info-card-meta strong {
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .info-card-meta {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+
+  .info-card-meta span,
+  .info-card-meta strong {
+    line-height: 1.25;
+  }
+
+  .progress-bar {
+    width: 100%;
+    margin-top: 8px;
   }
 
   .timeline-section {
-    padding: 14px 12px 8px;
-    border-radius: 24px;
+    padding: 12px 10px 6px;
+    border-radius: 20px;
+  }
+
+  .section-header {
+    padding: 2px 6px 8px;
   }
 
   .timeline-list::before {
-    left: 17px;
+    left: 13px;
+    top: 22px;
+    bottom: 22px;
   }
 
   .timeline-item {
-    grid-template-columns: 18px 1fr;
+    grid-template-columns: 14px minmax(0, 1fr);
     grid-template-areas:
       'marker time'
       'marker content';
     align-items: start;
-    gap: 8px 14px;
+    gap: 6px 12px;
     min-height: 0;
-    padding: 14px 10px;
+    padding: 12px 8px;
+    border-radius: 16px;
   }
 
   .timeline-marker {
     grid-area: marker;
-    margin-top: 6px;
+    margin-top: 4px;
   }
 
   .timeline-time {
     grid-area: time;
+    font-size: 13px;
   }
 
   .timeline-item .icon-badge {
@@ -560,6 +627,65 @@ body.evening-mode {
   }
 
   .timeline-content h3 {
-    font-size: 20px;
+    font-size: 17px;
+  }
+
+  .timeline-content p {
+    font-size: 13px;
+  }
+
+  .timeline-marker span {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .page-shell {
+    padding: 16px 10px 20px;
+  }
+
+  .clock {
+    font-size: clamp(32px, 15vw, 48px);
+  }
+
+  .hero-date {
+    font-size: 15px;
+  }
+
+  .cards-grid {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .info-card {
+    align-items: flex-start;
+    padding: 14px 12px;
+  }
+
+  .info-card .icon-badge {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .info-card h2 {
+    font-size: 18px;
+  }
+
+  .info-card-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timeline-section {
+    padding: 10px 8px 4px;
+  }
+
+  .timeline-item {
+    padding: 10px 6px;
+  }
+
+  .timeline-content h3 {
+    font-size: 16px;
   }
 }

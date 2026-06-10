@@ -123,3 +123,129 @@
 [debug] [2026-06-10T12:54:41.817Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/channels/live/releases versionName=projects%2F329311140215%2Fsites%2Fkiybiyschedule%2Fversions%2Fcce20f069d399468
 [debug] [2026-06-10T12:54:41.817Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/channels/live/releases {}
 [debug] [2026-06-10T12:54:43.128Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/channels/live/releases 200
+[debug] [2026-06-10T21:50:58.785Z] ----------------------------------------------------------------------
+[debug] [2026-06-10T21:50:58.788Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\stepa\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --project kiybiyschedule
+[debug] [2026-06-10T21:50:58.788Z] CLI Version:   15.0.0
+[debug] [2026-06-10T21:50:58.788Z] Platform:      win32
+[debug] [2026-06-10T21:50:58.788Z] Node Version:  v22.19.0
+[debug] [2026-06-10T21:50:58.789Z] Time:          Thu Jun 11 2026 00:50:58 GMT+0300 (Москва, стандартное время)
+[debug] [2026-06-10T21:50:58.789Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-10T21:51:00.682Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-10T21:51:00.683Z] > authorizing via signed-in user (stepakot0@gmail.com)
+[debug] [2026-06-10T21:51:00.683Z] [iam] checking project kiybiyschedule for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-10T21:51:00.684Z] Checked if tokens are valid: false, expires at: 1781099671695
+[debug] [2026-06-10T21:51:00.684Z] Checked if tokens are valid: false, expires at: 1781099671695
+[debug] [2026-06-10T21:51:00.684Z] > refreshing access token with scopes: []
+[debug] [2026-06-10T21:51:00.685Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-10T21:51:00.686Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-10T21:51:01.248Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-06-10T21:51:01.248Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-10T21:51:01.252Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/kiybiyschedule:testIamPermissions [none]
+[debug] [2026-06-10T21:51:01.253Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/kiybiyschedule:testIamPermissions x-goog-quota-user=projects/kiybiyschedule
+[debug] [2026-06-10T21:51:01.253Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/kiybiyschedule:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-10T21:51:01.733Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/kiybiyschedule:testIamPermissions 200
+[debug] [2026-06-10T21:51:01.733Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/kiybiyschedule:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-10T21:51:01.734Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:01.734Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:01.734Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/kiybiyschedule [none]
+[debug] [2026-06-10T21:51:02.502Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/kiybiyschedule 200
+[debug] [2026-06-10T21:51:02.502Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/kiybiyschedule {"projectId":"kiybiyschedule","projectNumber":"329311140215","displayName":"kiybiyschedule","name":"projects/kiybiyschedule","resources":{"hostingSite":"kiybiyschedule"},"state":"ACTIVE","etag":"1_03dc4afb-8be5-44c6-864d-dbe9465b90c4"}
+[info] 
+[info] === Deploying to 'kiybiyschedule'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-06-10T21:51:02.505Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:02.505Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:02.505Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions [none]
+[debug] [2026-06-10T21:51:02.505Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-06-10T21:51:04.886Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions 200
+[debug] [2026-06-10T21:51:04.886Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions {"name":"projects/329311140215/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[kiybiyschedule]: beginning deploy... 
+[info] i  hosting[kiybiyschedule]: found 7 files in dist 
+[debug] [2026-06-10T21:51:04.898Z] [hosting] uploading with 200 concurrency
+[debug] [2026-06-10T21:51:04.965Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:04.965Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:04.966Z] [hosting] hash cache [ZGlzdA] stored for 7 files
+[debug] [2026-06-10T21:51:04.966Z] [hosting][hash queue][FINAL] {"max":64,"min":3,"avg":31.571428571428573,"active":0,"complete":7,"success":7,"errored":0,"retried":0,"total":7,"elapsed":67}
+[debug] [2026-06-10T21:51:04.966Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/329311140215/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b:populateFiles [none]
+[debug] [2026-06-10T21:51:04.966Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/329311140215/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b:populateFiles {"files":{"/index.html":"72c818247bf5588dd459a9001d32a05729f80f1e45b2e42adaddf8724fed64ff","/assets/index-C3T91rEy.css":"12f0f2b1b8550d0acf6bad62af03ad30cbd28522b3b4f229829c6cfd3ca0d256","/assets/index-Cv09tqFJ.js":"ebed52dd1d34580250b6171fbf3e8968e82695c0c9b8a30d8a41f647ac40f70b","/assets/site-icon-DI6jIWvv.png":"3d43faeb5b35bf76854a46665601f93cbf35b68a62bdeb21c88abeadfc07cc48","/assets/summer_night-BXfmrgRj.webp":"881e2f987523d3c8cc4d90eeeb66cbf8f4f98c3d73bf8aed1d24b14d976643bd","/assets/background_summer-C7GJ-kRk.webp":"effa334244fe9b6f798ce89e65477de0b4e4c6da5e163131d124d83061d8aa25","/assets/summer_evening-B9ectGsY.webp":"416f0801d2744a70916af8c9b0808d2b69953cdefa215458125b5188a76a82bf"}}
+[debug] [2026-06-10T21:51:06.300Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/329311140215/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b:populateFiles 200
+[debug] [2026-06-10T21:51:06.300Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/329311140215/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b:populateFiles {"uploadRequiredHashes":["416f0801d2744a70916af8c9b0808d2b69953cdefa215458125b5188a76a82bf","72c818247bf5588dd459a9001d32a05729f80f1e45b2e42adaddf8724fed64ff","12f0f2b1b8550d0acf6bad62af03ad30cbd28522b3b4f229829c6cfd3ca0d256","ebed52dd1d34580250b6171fbf3e8968e82695c0c9b8a30d8a41f647ac40f70b","881e2f987523d3c8cc4d90eeeb66cbf8f4f98c3d73bf8aed1d24b14d976643bd"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files"}
+[debug] [2026-06-10T21:51:06.301Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.302Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.302Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.302Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.302Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.302Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.302Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.302Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.303Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.303Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:06.303Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/416f0801d2744a70916af8c9b0808d2b69953cdefa215458125b5188a76a82bf [none]
+[debug] [2026-06-10T21:51:06.303Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/416f0801d2744a70916af8c9b0808d2b69953cdefa215458125b5188a76a82bf [stream]
+[debug] [2026-06-10T21:51:06.304Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/72c818247bf5588dd459a9001d32a05729f80f1e45b2e42adaddf8724fed64ff [none]
+[debug] [2026-06-10T21:51:06.305Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/72c818247bf5588dd459a9001d32a05729f80f1e45b2e42adaddf8724fed64ff [stream]
+[debug] [2026-06-10T21:51:06.306Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/12f0f2b1b8550d0acf6bad62af03ad30cbd28522b3b4f229829c6cfd3ca0d256 [none]
+[debug] [2026-06-10T21:51:06.306Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/12f0f2b1b8550d0acf6bad62af03ad30cbd28522b3b4f229829c6cfd3ca0d256 [stream]
+[debug] [2026-06-10T21:51:06.307Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/ebed52dd1d34580250b6171fbf3e8968e82695c0c9b8a30d8a41f647ac40f70b [none]
+[debug] [2026-06-10T21:51:06.308Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/ebed52dd1d34580250b6171fbf3e8968e82695c0c9b8a30d8a41f647ac40f70b [stream]
+[debug] [2026-06-10T21:51:06.309Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/881e2f987523d3c8cc4d90eeeb66cbf8f4f98c3d73bf8aed1d24b14d976643bd [none]
+[debug] [2026-06-10T21:51:06.309Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/881e2f987523d3c8cc4d90eeeb66cbf8f4f98c3d73bf8aed1d24b14d976643bd [stream]
+[debug] [2026-06-10T21:51:06.311Z] [hosting][populate queue][FINAL] {"max":1338,"min":1338,"avg":1338,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1346}
+[debug] [2026-06-10T21:51:06.311Z] [hosting] uploads queued: 5
+[info] i  hosting: uploading new files [0/5] (0%) 
+[debug] [2026-06-10T21:51:08.281Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/12f0f2b1b8550d0acf6bad62af03ad30cbd28522b3b4f229829c6cfd3ca0d256 200
+[debug] [2026-06-10T21:51:08.281Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/12f0f2b1b8550d0acf6bad62af03ad30cbd28522b3b4f229829c6cfd3ca0d256 [stream]
+[debug] [2026-06-10T21:51:08.484Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/72c818247bf5588dd459a9001d32a05729f80f1e45b2e42adaddf8724fed64ff 200
+[debug] [2026-06-10T21:51:08.484Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/72c818247bf5588dd459a9001d32a05729f80f1e45b2e42adaddf8724fed64ff [stream]
+[info] i  hosting: uploading new files [2/5] (40%) 
+[debug] [2026-06-10T21:51:08.935Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/ebed52dd1d34580250b6171fbf3e8968e82695c0c9b8a30d8a41f647ac40f70b 200
+[debug] [2026-06-10T21:51:08.935Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/ebed52dd1d34580250b6171fbf3e8968e82695c0c9b8a30d8a41f647ac40f70b [stream]
+[info] i  hosting: uploading new files [3/5] (60%) 
+[info] i  hosting: uploading new files [3/5] (60%) 
+[info] i  hosting: uploading new files [3/5] (60%) 
+[info] i  hosting: uploading new files [3/5] (60%) 
+[debug] [2026-06-10T21:51:17.915Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/881e2f987523d3c8cc4d90eeeb66cbf8f4f98c3d73bf8aed1d24b14d976643bd 200
+[debug] [2026-06-10T21:51:17.916Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/881e2f987523d3c8cc4d90eeeb66cbf8f4f98c3d73bf8aed1d24b14d976643bd [stream]
+[debug] [2026-06-10T21:51:18.674Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/416f0801d2744a70916af8c9b0808d2b69953cdefa215458125b5188a76a82bf 200
+[debug] [2026-06-10T21:51:18.674Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b/files/416f0801d2744a70916af8c9b0808d2b69953cdefa215458125b5188a76a82bf [stream]
+[debug] [2026-06-10T21:51:18.674Z] [hosting][upload queue][FINAL] {"max":12373,"min":1979,"avg":6156.2,"active":0,"complete":5,"success":5,"errored":0,"retried":0,"total":5,"elapsed":12373}
+[info] i  hosting: upload complete 
+[info] +  hosting[kiybiyschedule]: file upload complete 
+[debug] [2026-06-10T21:51:18.674Z] [hosting] deploy completed after 13786ms
+[debug] [2026-06-10T21:51:18.675Z] [
+  {
+    "config": {
+      "public": "dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "kiybiyschedule"
+    },
+    "version": "projects/329311140215/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b"
+  }
+]
+[info] i  hosting[kiybiyschedule]: finalizing version... 
+[debug] [2026-06-10T21:51:18.676Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:18.677Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:18.677Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b updateMask=status%2Cconfig
+[debug] [2026-06-10T21:51:18.677Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}
+[debug] [2026-06-10T21:51:20.499Z] <<< [apiv2][status] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b 200
+[debug] [2026-06-10T21:51:20.499Z] <<< [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b {"name":"projects/329311140215/sites/kiybiyschedule/versions/ee6c0a75b5a1f98b","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2026-06-10T21:51:03.337757Z","createUser":{"email":"stepakot0@gmail.com"},"finalizeTime":"2026-06-10T21:51:20.220212Z","finalizeUser":{"email":"stepakot0@gmail.com"}}
+[debug] [2026-06-10T21:51:20.499Z] [hosting] finalized version for kiybiyschedule:[object Object]
+[info] +  hosting[kiybiyschedule]: version finalized 
+[info] i  hosting[kiybiyschedule]: releasing new version... 
+[debug] [2026-06-10T21:51:20.499Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:20.499Z] Checked if tokens are valid: true, expires at: 1781131860249
+[debug] [2026-06-10T21:51:20.499Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/channels/live/releases versionName=projects%2F329311140215%2Fsites%2Fkiybiyschedule%2Fversions%2Fee6c0a75b5a1f98b
+[debug] [2026-06-10T21:51:20.500Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/channels/live/releases {}
+[debug] [2026-06-10T21:51:21.946Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/kiybiyschedule/channels/live/releases 200

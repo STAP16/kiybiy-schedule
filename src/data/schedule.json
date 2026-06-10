@@ -1,6 +1,5 @@
 [
   { "title": "Подъем", "time": "08:00", "icon": "AlarmClock", "color": "#2563eb" },
-  { "title": "Уборка", "time": "08:10", "icon": "Sparkles", "color": "#14b8a6" },
   { "title": "Зарядка", "time": "08:30", "icon": "Dumbbell", "color": "#f97316" },
   { "title": "Завтрак", "time": "08:45", "icon": "Croissant", "color": "#eab308" },
   { "title": "Проверка уборки", "time": "09:00", "icon": "ClipboardCheck", "color": "#0f766e" },

@@ -1,4 +1,4 @@
-const MOSCOW_TIME_ZONE = 'Europe/Moscow';
+export const MOSCOW_TIME_ZONE = 'Europe/Moscow';
 
 function timeToMinutes(value) {
   const [hours, minutes] = value.split(':').map(Number);
@@ -32,6 +32,11 @@ export function getMoscowNowParts(now = new Date()) {
     minute: Number(parts.minute),
     second: Number(parts.second),
   };
+}
+
+export function getMoscowDateKey(now = new Date()) {
+  const parts = getMoscowNowParts(now);
+  return `${parts.year}-${String(parts.month).padStart(2, '0')}-${String(parts.day).padStart(2, '0')}`;
 }
 
 export function formatClock(now = new Date()) {

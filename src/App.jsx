@@ -38,6 +38,7 @@ const DEFAULT_DEV_SETTINGS = {
   enabled: false,
   time: '07:40:00',
   speedMultiplier: 60,
+  breakfastLeadMinutes: DEFAULT_ANNOUNCEMENT_SETTINGS.breakfastLeadMinutes,
   mealLeadMinutes: DEFAULT_ANNOUNCEMENT_SETTINGS.mealLeadMinutes,
   secondBreakfastLeadMinutes: DEFAULT_ANNOUNCEMENT_SETTINGS.secondBreakfastLeadMinutes,
 };
@@ -285,10 +286,15 @@ export default function App() {
 
   const announcementSettings = useMemo(
     () => ({
+      breakfastLeadMinutes: Number(devSettings.breakfastLeadMinutes),
       mealLeadMinutes: Number(devSettings.mealLeadMinutes),
       secondBreakfastLeadMinutes: Number(devSettings.secondBreakfastLeadMinutes),
     }),
-    [devSettings.mealLeadMinutes, devSettings.secondBreakfastLeadMinutes],
+    [
+      devSettings.breakfastLeadMinutes,
+      devSettings.mealLeadMinutes,
+      devSettings.secondBreakfastLeadMinutes,
+    ],
   );
 
   const announcements = useMemo(
@@ -546,6 +552,22 @@ export default function App() {
               <option value={60}>60x</option>
               <option value={300}>300x</option>
             </select>
+          </label>
+
+          <label className="dev-field">
+            <span>Завтрак, минут</span>
+            <input
+              type="number"
+              min="0"
+              max="120"
+              value={devSettings.breakfastLeadMinutes}
+              onChange={(event) =>
+                setDevSettings((current) => ({
+                  ...current,
+                  breakfastLeadMinutes: Number(event.target.value),
+                }))
+              }
+            />
           </label>
 
           <label className="dev-field">

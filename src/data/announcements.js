@@ -59,11 +59,17 @@ const afternoonSnackSrc = new URL(
 ).href;
 
 export const DEFAULT_ANNOUNCEMENT_SETTINGS = {
+  breakfastLeadMinutes: 10,
   mealLeadMinutes: 20,
   secondBreakfastLeadMinutes: 7,
 };
 
 export function createAnnouncementPlan(settings = DEFAULT_ANNOUNCEMENT_SETTINGS) {
+  const breakfastLeadMinutes =
+    Number.isFinite(settings.breakfastLeadMinutes) && settings.breakfastLeadMinutes >= 0
+      ? settings.breakfastLeadMinutes
+      : DEFAULT_ANNOUNCEMENT_SETTINGS.breakfastLeadMinutes;
+
   const mealLeadMinutes =
     Number.isFinite(settings.mealLeadMinutes) && settings.mealLeadMinutes >= 0
       ? settings.mealLeadMinutes
@@ -88,7 +94,7 @@ export function createAnnouncementPlan(settings = DEFAULT_ANNOUNCEMENT_SETTINGS)
       id: 'breakfast-assembly',
       eventTitle: 'Завтрак',
       triggerType: 'before-start',
-      leadMinutes: mealLeadMinutes,
+      leadMinutes: breakfastLeadMinutes,
       audioSrc: breakfastAssemblySrc,
       orbTitle: 'Строимся на завтрак',
       orbText: 'Сбор до начала трапезы.',

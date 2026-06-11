@@ -30,18 +30,8 @@ const EVENING_ACCENT_COLOR = '#f6b457';
 const EVENING_START_MINUTES = 17 * 60;
 const MOBILE_BREAKPOINT = 640;
 const DAY_MINUTES = 24 * 60;
-const DAY_SECONDS = DAY_MINUTES * 60;
 const FALLBACK_ORB_DURATION_MS = 9000;
 const PLAYED_STORAGE_KEY = 'tv-scheduler-played-announcements';
-const DEV_SETTINGS_STORAGE_KEY = 'tv-scheduler-dev-settings';
-const DEFAULT_DEV_SETTINGS = {
-  enabled: false,
-  time: '07:40:00',
-  speedMultiplier: 60,
-  breakfastLeadMinutes: DEFAULT_ANNOUNCEMENT_SETTINGS.breakfastLeadMinutes,
-  mealLeadMinutes: DEFAULT_ANNOUNCEMENT_SETTINGS.mealLeadMinutes,
-  secondBreakfastLeadMinutes: DEFAULT_ANNOUNCEMENT_SETTINGS.secondBreakfastLeadMinutes,
-};
 
 function getCardEvent(event, theme) {
   if (!event) {
@@ -69,56 +59,6 @@ function preloadImage(src) {
   const image = new Image();
   image.src = src;
   return image;
-}
-
-function loadDevSettings() {
-  if (typeof window === 'undefined') {
-    return DEFAULT_DEV_SETTINGS;
-  }
-
-  try {
-    const rawValue = window.localStorage.getItem(DEV_SETTINGS_STORAGE_KEY);
-
-    if (!rawValue) {
-      return DEFAULT_DEV_SETTINGS;
-    }
-
-    return {
-      ...DEFAULT_DEV_SETTINGS,
-      ...JSON.parse(rawValue),
-    };
-  } catch {
-    return DEFAULT_DEV_SETTINGS;
-  }
-}
-
-function parseTimeInput(value) {
-  const [hours = '0', minutes = '0', seconds = '0'] = value.split(':');
-  const safeHours = Math.min(23, Math.max(0, Number.parseInt(hours, 10) || 0));
-  const safeMinutes = Math.min(59, Math.max(0, Number.parseInt(minutes, 10) || 0));
-  const safeSeconds = Math.min(59, Math.max(0, Number.parseInt(seconds, 10) || 0));
-
-  return safeHours * 3600 + safeMinutes * 60 + safeSeconds;
-}
-
-function formatTimeInput(totalSeconds) {
-  const normalizedSeconds = ((totalSeconds % DAY_SECONDS) + DAY_SECONDS) % DAY_SECONDS;
-  const hours = Math.floor(normalizedSeconds / 3600);
-  const minutes = Math.floor((normalizedSeconds % 3600) / 60);
-  const seconds = normalizedSeconds % 60;
-
-  return [hours, minutes, seconds].map((value) => String(value).padStart(2, '0')).join(':');
-}
-
-function buildSimulatedDate(baseParts, timeString) {
-  const totalSeconds = parseTimeInput(timeString);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  return new Date(
-    Date.UTC(baseParts.year, baseParts.month - 1, baseParts.day, hours - 3, minutes, seconds),
-  );
 }
 
 function getAnnouncementTriggerMinutes(item, event) {
@@ -178,17 +118,12 @@ function writePlayedAnnouncements(value) {
 export default function App() {
   const [realNow, setRealNow] = useState(() => new Date());
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= MOBILE_BREAKPOINT);
-  const [devSettings, setDevSettings] = useState(loadDevSettings);
   const [activeAnnouncement, setActiveAnnouncement] = useState(null);
   const [audioStatus, setAudioStatus] = useState('idle');
   const audioRef = useRef(null);
   const orbTimeoutRef = useRef(null);
   const previousMomentRef = useRef(null);
   const playedAnnouncementsRef = useRef(readPlayedAnnouncements());
-
-  useEffect(() => {
-    window.localStorage.setItem(DEV_SETTINGS_STORAGE_KEY, JSON.stringify(devSettings));
-  }, [devSettings]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -239,30 +174,7 @@ export default function App() {
     [],
   );
 
-  useEffect(() => {
-    if (!devSettings.enabled) {
-      return undefined;
-    }
-
-    const timer = window.setInterval(() => {
-      setDevSettings((current) => ({
-        ...current,
-        time: formatTimeInput(
-          parseTimeInput(current.time) + Math.max(1, Number(current.speedMultiplier) || 1),
-        ),
-      }));
-    }, 1000);
-
-    return () => window.clearInterval(timer);
-  }, [devSettings.enabled]);
-
-  const now = useMemo(() => {
-    if (!devSettings.enabled) {
-      return realNow;
-    }
-
-    return buildSimulatedDate(getMoscowNowParts(realNow), devSettings.time);
-  }, [devSettings.enabled, devSettings.time, realNow]);
+  const now = realNow;
 
   const clockText = formatClock(now);
   const clockParts = clockText.split(':');
@@ -284,22 +196,9 @@ export default function App() {
     [isMobile, now],
   );
 
-  const announcementSettings = useMemo(
-    () => ({
-      breakfastLeadMinutes: Number(devSettings.breakfastLeadMinutes),
-      mealLeadMinutes: Number(devSettings.mealLeadMinutes),
-      secondBreakfastLeadMinutes: Number(devSettings.secondBreakfastLeadMinutes),
-    }),
-    [
-      devSettings.breakfastLeadMinutes,
-      devSettings.mealLeadMinutes,
-      devSettings.secondBreakfastLeadMinutes,
-    ],
-  );
-
   const announcements = useMemo(
-    () => normalizeAnnouncements(createAnnouncementPlan(announcementSettings), schedule),
-    [announcementSettings],
+    () => normalizeAnnouncements(createAnnouncementPlan(DEFAULT_ANNOUNCEMENT_SETTINGS), schedule),
+    [],
   );
 
   useEffect(() => {
@@ -422,21 +321,6 @@ export default function App() {
       : getProgressPercent(currentEvent, currentMinutes)
     : undefined;
 
-  const adjustDevTime = (deltaSeconds) => {
-    setDevSettings((current) => ({
-      ...current,
-      enabled: true,
-      time: formatTimeInput(parseTimeInput(current.time) + deltaSeconds),
-    }));
-  };
-
-  const resetPlayedAnnouncements = () => {
-    playedAnnouncementsRef.current = {};
-    writePlayedAnnouncements({});
-    previousMomentRef.current = null;
-    setAudioStatus('idle');
-  };
-
   return (
     <main className={`page-shell page-shell-${theme}`}>
       <div className="background-glow background-glow-left" />
@@ -497,136 +381,6 @@ export default function App() {
           </ul>
         </section>
       ) : null}
-
-      <section className="dev-panel">
-        <div className="dev-panel-header">
-          <div>
-            <p className="dev-panel-kicker">Проверка сценариев</p>
-            <h2>Режим разработки</h2>
-          </div>
-          <label className="dev-toggle">
-            <input
-              type="checkbox"
-              checked={devSettings.enabled}
-              onChange={(event) =>
-                setDevSettings((current) => ({
-                  ...current,
-                  enabled: event.target.checked,
-                  time: event.target.checked ? current.time : DEFAULT_DEV_SETTINGS.time,
-                }))
-              }
-            />
-            <span>{devSettings.enabled ? 'Включен' : 'Выключен'}</span>
-          </label>
-        </div>
-
-        <div className="dev-grid">
-          <label className="dev-field">
-            <span>Тестовое время</span>
-            <input
-              type="time"
-              step="1"
-              value={devSettings.time}
-              onChange={(event) =>
-                setDevSettings((current) => ({
-                  ...current,
-                  time: event.target.value || DEFAULT_DEV_SETTINGS.time,
-                }))
-              }
-            />
-          </label>
-
-          <label className="dev-field">
-            <span>Скорость времени</span>
-            <select
-              value={devSettings.speedMultiplier}
-              onChange={(event) =>
-                setDevSettings((current) => ({
-                  ...current,
-                  speedMultiplier: Number(event.target.value),
-                }))
-              }
-            >
-              <option value={1}>1x</option>
-              <option value={10}>10x</option>
-              <option value={60}>60x</option>
-              <option value={300}>300x</option>
-            </select>
-          </label>
-
-          <label className="dev-field">
-            <span>Завтрак, минут</span>
-            <input
-              type="number"
-              min="0"
-              max="120"
-              value={devSettings.breakfastLeadMinutes}
-              onChange={(event) =>
-                setDevSettings((current) => ({
-                  ...current,
-                  breakfastLeadMinutes: Number(event.target.value),
-                }))
-              }
-            />
-          </label>
-
-          <label className="dev-field">
-            <span>Еда заранее, минут</span>
-            <input
-              type="number"
-              min="0"
-              max="120"
-              value={devSettings.mealLeadMinutes}
-              onChange={(event) =>
-                setDevSettings((current) => ({
-                  ...current,
-                  mealLeadMinutes: Number(event.target.value),
-                }))
-              }
-            />
-          </label>
-
-          <label className="dev-field">
-            <span>Второй завтрак, минут</span>
-            <input
-              type="number"
-              min="0"
-              max="120"
-              value={devSettings.secondBreakfastLeadMinutes}
-              onChange={(event) =>
-                setDevSettings((current) => ({
-                  ...current,
-                  secondBreakfastLeadMinutes: Number(event.target.value),
-                }))
-              }
-            />
-          </label>
-        </div>
-
-        <div className="dev-actions">
-          <button type="button" onClick={() => adjustDevTime(-300)}>
-            -5 мин
-          </button>
-          <button type="button" onClick={() => adjustDevTime(-60)}>
-            -1 мин
-          </button>
-          <button type="button" onClick={() => adjustDevTime(60)}>
-            +1 мин
-          </button>
-          <button type="button" onClick={() => adjustDevTime(300)}>
-            +5 мин
-          </button>
-          <button type="button" onClick={resetPlayedAnnouncements}>
-            Сбросить реплики
-          </button>
-        </div>
-
-        <p className="dev-status">
-          {audioStatus === 'blocked'
-            ? 'Браузер заблокировал автозвук. Один раз кликните по странице и повторите проверку.'
-            : 'Реплики проигрываются по сценарию, а время можно проматывать для проверки.'}
-        </p>
-      </section>
     </main>
   );
 }

@@ -59,8 +59,8 @@ const afternoonSnackSrc = new URL(
 ).href;
 
 export const DEFAULT_ANNOUNCEMENT_SETTINGS = {
-  breakfastLeadMinutes: 10,
-  mealLeadMinutes: 20,
+  breakfastLeadMinutes: 7,
+  mealLeadMinutes: 15,
   secondBreakfastLeadMinutes: 7,
 };
 
@@ -99,14 +99,15 @@ export function createAnnouncementPlan(settings = DEFAULT_ANNOUNCEMENT_SETTINGS)
       orbTitle: 'Строимся на завтрак',
       orbText: 'Сбор до начала трапезы.',
     },
-    {
-      id: 'morning-room-check',
-      eventTitle: 'Проверка уборки',
-      triggerType: 'start',
-      audioSrc: roomCheckSrc,
-      orbTitle: 'Проверка уборки',
-      orbText: 'Строимся на утреннюю проверку комнат.',
-    },
+    // {
+    //   id: 'morning-room-check',
+    //   eventTitle: 'Проверка уборки',
+    //   triggerType: 'before-end',
+    //   leadMinutes: 5,
+    //   audioSrc: roomCheckSrc,
+    //   orbTitle: 'Проверка уборки',
+    //   orbText: 'Строимся на утреннюю проверку комнат.',
+    // },
     {
       id: 'elastic-assembly',
       eventTitle: 'Баскетбольное поле и спортзал',

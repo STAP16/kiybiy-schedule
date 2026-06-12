@@ -66,6 +66,10 @@ function getAnnouncementTriggerMinutes(item, event) {
     return ((event.startMinutes - item.leadMinutes) % DAY_MINUTES + DAY_MINUTES) % DAY_MINUTES;
   }
 
+  if (item.triggerType === 'before-end') {
+    return ((event.endMinutes - item.leadMinutes) % DAY_MINUTES + DAY_MINUTES) % DAY_MINUTES;
+  }
+
   if (item.triggerType === 'end') {
     return event.endMinutes % DAY_MINUTES;
   }
